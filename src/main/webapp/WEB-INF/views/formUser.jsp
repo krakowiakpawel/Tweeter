@@ -11,18 +11,22 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 </head>
 
+
+
+
+
 <body>
 	<h1>Add User</h1>
 	<form:form modelAttribute="user" method="post">
 		<form:hidden path="id" />
 
-		<label>firstName</label>
-		<form:errors path="firstName" />
-		<form:input path="firstName" />
+		<label>username</label>
+		<form:errors path="username" />
+		<form:input path="username" />
 
-		<label>lastName</label>
-		<form:errors path="lastName" />
-		<form:input path="lastName" />
+		<label>password</label>
+		<form:errors path="password" />
+		<form:input  path="password" />
 
 		<label>email</label>
 		<form:errors path="email" />
