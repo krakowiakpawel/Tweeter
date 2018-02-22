@@ -9,18 +9,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-	Welcome ${user.username}!
-	<a href="${pageContext.request.contextPath}/logout">Logout</a>
+	<jsp:include page="header.jsp" />
 	</br>
-	</br>
+	My Tweets
 	<c:forEach var="t" items="${tList}">
 	${t.created}  - ${t.text} </br>
 	</c:forEach>
 </br>
-	<a href="${pageContext.request.contextPath}/tweet/add">Add new
-		Tweet</a>
-	</br>
 	
+	
+	<jsp:include page="footer.jsp" />
 	</br>
 </body>
 </html>

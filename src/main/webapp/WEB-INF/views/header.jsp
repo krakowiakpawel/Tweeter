@@ -9,8 +9,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>JSP 404</h1>
+<h1>header page</h1>
+<a href="${pageContext.request.contextPath}/home">HOME</a></br>
+<a href="${pageContext.request.contextPath}/tweet/add">Add new Tweet</a></br>
+<a href="${pageContext.request.contextPath}/messages">Messages</a></br>
+Welcome ${user.username}!
+	<a href="${pageContext.request.contextPath}/logout">Logout</a>
+	</br>
 
-${message}
 </body>
 </html>

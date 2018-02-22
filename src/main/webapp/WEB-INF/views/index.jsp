@@ -12,12 +12,13 @@
 <h2>
 </br>
 
-
+<jsp:include page="header.jsp" />
 <a href="${pageContext.request.contextPath}/home">HOME</a></br>
 <a href="${pageContext.request.contextPath}/user/add">Add new User</a></br>
 <a href="${pageContext.request.contextPath}/tweet/add">Add new Tweet</a></br>
 <a href="${pageContext.request.contextPath}/user/search-tweets">Search-tweets (Trzeba dodać param "toSearch")</a></br>
 <a href="${pageContext.request.contextPath}/user/all">Show all users</a></br>
+<jsp:include page="footer.jsp" />
 </h2>
 </div>
 </body>

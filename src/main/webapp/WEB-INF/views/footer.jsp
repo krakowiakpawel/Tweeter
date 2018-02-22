@@ -9,8 +9,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>JSP 404</h1>
-
-${message}
+<h1>footer page</h1>
 </body>
 </html>

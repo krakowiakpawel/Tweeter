@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import pl.tweeter.entity.Tweet;
 import pl.tweeter.entity.User;
@@ -40,21 +41,25 @@ public class HomeController {
 
 	@PostMapping("/login")
 	public String loginTry(HttpServletRequest request, Model model, @RequestParam String email,
-			@RequestParam String password) {
+			@RequestParam String password, RedirectAttributes redirectAttributes) {
 
-		User user = userRepo.findByPasswordAndEmail(email, password);
+		User user = userRepo.findByEmail(email);
 
-		if (user == null) {
-			model.addAttribute("wrong", "t");
+		if (user == null || !user.checkPassword(password)) {
+			redirectAttributes.addFlashAttribute("message", "Wrong email / password");
 			return "redirect:/login";
 		} else {
-			String accType = user.getAccType();
 			HttpSession sess = request.getSession();
-			sess.setAttribute("login", true);
-			sess.setAttribute("accType", accType);
 			sess.setAttribute("user", user);
 			return "redirect:/main";
 		}
+	}
+
+	@GetMapping("/logout")
+	public String logut(HttpServletRequest request) {
+		HttpSession sess = request.getSession();
+		sess.invalidate();
+		return "redirect:/login";
 	}
 
 	@GetMapping("/main")
@@ -65,16 +70,18 @@ public class HomeController {
 		return "main";
 	}
 
-	@GetMapping("/logout")
-	public String logut(HttpServletRequest request) {
-		HttpSession sess = request.getSession();
-		sess.invalidate();
-		return "redirect:/login";
-	}
-
 	@GetMapping("/")
 	public String main() {
 		return "main";
+	}
+	
+	@GetMapping("/test")
+	public String test() {
+		return "test";
+	}
+	@GetMapping("/test2")
+	public String test2() {
+		return "test2";
 	}
 
 }

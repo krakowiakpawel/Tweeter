@@ -12,34 +12,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 public class AuthenticationFilter implements Filter {
 	public AuthenticationFilter() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public void destroy() {
-		// TODO Auto-generated method stub
 	}
 
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain )
 			throws IOException, ServletException {
 
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
 		HttpSession sess = req.getSession();
 
-		if (sess.getAttribute("login") == null && !req.getRequestURI().equals("/Tweeter/login")) {
+		if (sess.getAttribute("user") == null && !req.getRequestURI().equals("/Tweeter/login") && !req.getRequestURI().equals("/Tweeter/user/add")) {
+			sess.setAttribute("message", "You have to login");
 			resp.sendRedirect(req.getContextPath() + "/login");
+		} else {
+			chain.doFilter(request, response);
 		}
 
-		chain.doFilter(request, response);
+		
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
 	}
 
 }
