@@ -8,13 +8,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.3.1.js"
+	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+	crossorigin="anonymous"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.js"></script>
+<script src="js/app.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 	<h1>LOGIN PAGE</h1>
 	<h2>Hi! You have to login in to continue</h2>
-	<h2>${wrong}</h2>
 
 	<form class="needs-validation" novalidate method="post">
 		<div class="form-row">
@@ -62,6 +66,15 @@
 		})();
 	</script>
 
+	<script type="text/javascript">
+		var message = getCookie("message");	
+		$.notify(message, 
+				{position : "top left",
+			
+			 autoHideDelay: 3000
+				
+				});
+	</script>
 
 
 
@@ -70,10 +83,7 @@
 
 
 
-
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
+	
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
 		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"

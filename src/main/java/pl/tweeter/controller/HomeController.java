@@ -1,9 +1,10 @@
 package pl.tweeter.controller;
 
-import java.util.Date;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import pl.tweeter.entity.Tweet;
 import pl.tweeter.entity.User;
 import pl.tweeter.repository.TweetRepo;
 import pl.tweeter.repository.UserRepo;
+import pl.tweeter.service.Service;
 
 @Controller
 public class HomeController {
@@ -40,16 +41,19 @@ public class HomeController {
 	}
 
 	@PostMapping("/login")
-	public String loginTry(HttpServletRequest request, Model model, @RequestParam String email,
-			@RequestParam String password, RedirectAttributes redirectAttributes) {
+	public String loginTry(HttpServletResponse response, HttpServletRequest request, Model model, @RequestParam String email,
+			@RequestParam String password) {
 
 		User user = userRepo.findByEmail(email);
 
 		if (user == null || !user.checkPassword(password)) {
-			redirectAttributes.addFlashAttribute("message", "Wrong email / password");
+			Service.setMessageCookie(response, "Wrong login/password, try again!", 10);
+			
 			return "redirect:/login";
 		} else {
 			HttpSession sess = request.getSession();
+			String name = user.getUsername();
+			Service.setMessageCookie(response, "Welcome " + name + "!", 3);
 			sess.setAttribute("user", user);
 			return "redirect:/main";
 		}
@@ -80,7 +84,8 @@ public class HomeController {
 		return "test";
 	}
 	@GetMapping("/test2")
-	public String test2() {
+	public String test2(HttpServletResponse response) throws IOException {
+		Service.setMessageCookie(response, "redirect from test2", 20);
 		return "test2";
 	}
 

@@ -29,7 +29,6 @@ public class AuthenticationFilter implements Filter {
 		HttpSession sess = req.getSession();
 
 		if (sess.getAttribute("user") == null && !req.getRequestURI().equals("/Tweeter/login") && !req.getRequestURI().equals("/Tweeter/user/add")) {
-			sess.setAttribute("message", "You have to login");
 			resp.sendRedirect(req.getContextPath() + "/login");
 		} else {
 			chain.doFilter(request, response);
