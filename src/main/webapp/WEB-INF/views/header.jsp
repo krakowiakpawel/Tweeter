@@ -17,7 +17,7 @@
 		<nav class="navbar navbar-inverse">
 			  <div class="container-fluid">
 			    <div class="navbar-header">
-			      <a class="navbar-brand" href="${pageContext.request.contextPath}/">Home page</a>
+			      <a class="navbar-brand" href="${pageContext.request.contextPath}/main">Home page</a>
 			    </div>
 			    <ul class="nav navbar-nav">
 			      <li><a href="${pageContext.request.contextPath}/tweet/add">Add new Tweet</a></li>

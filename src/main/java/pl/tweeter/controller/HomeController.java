@@ -1,6 +1,7 @@
 package pl.tweeter.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import pl.tweeter.entity.Comment;
 import pl.tweeter.entity.Tweet;
 import pl.tweeter.entity.User;
+import pl.tweeter.repository.CommentRepo;
 import pl.tweeter.repository.TweetRepo;
 import pl.tweeter.repository.UserRepo;
 import pl.tweeter.service.Service;
@@ -26,6 +29,8 @@ public class HomeController {
 	UserRepo userRepo;
 	@Autowired
 	TweetRepo tweetRepo;
+	@Autowired
+	CommentRepo commentRepo;
 
 	@GetMapping("/login")
 	public String main(HttpServletRequest request, Model model, @RequestParam(required = false) String wrong) {
@@ -41,14 +46,14 @@ public class HomeController {
 	}
 
 	@PostMapping("/login")
-	public String loginTry(HttpServletResponse response, HttpServletRequest request, Model model, @RequestParam String email,
-			@RequestParam String password) {
+	public String loginTry(HttpServletResponse response, HttpServletRequest request, Model model,
+			@RequestParam String email, @RequestParam String password) {
 
 		User user = userRepo.findByEmail(email);
 
 		if (user == null || !user.checkPassword(password)) {
 			Service.setMessageCookie(response, "Wrong login/password, try again!", 10);
-			
+
 			return "redirect:/login";
 		} else {
 			HttpSession sess = request.getSession();
@@ -71,6 +76,20 @@ public class HomeController {
 		User user = (User) request.getSession().getAttribute("user");
 		List<Tweet> tList = tweetRepo.findByUser(user);
 		model.addAttribute("tList", tList);
+
+		HashMap<Integer, List> hmap = new HashMap<>();
+
+		for (Tweet tweet : tList) {
+			List<Comment> comList = commentRepo.findByTweet(tweet);
+			int id = tweet.getId();
+			hmap.put(id, comList);
+		}
+		model.addAttribute("hmap", hmap);
+		
+		HashMap<String, String> testMap = new HashMap<>();
+		testMap.put("1", "testComment");
+		model.addAttribute("testMap", testMap);
+		
 		return "main";
 	}
 
@@ -78,11 +97,12 @@ public class HomeController {
 	public String main() {
 		return "main";
 	}
-	
+
 	@GetMapping("/test")
 	public String test() {
 		return "test";
 	}
+
 	@GetMapping("/test2")
 	public String test2(HttpServletResponse response) throws IOException {
 		Service.setMessageCookie(response, "redirect from test2", 20);

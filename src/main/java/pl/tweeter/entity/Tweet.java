@@ -34,6 +34,10 @@ public class Tweet {
 	
 	@Column
 	LocalDateTime created;
+	
+	@Column
+	int likes = 0;
+	
 
 	public User getUser() {
 		return user;
@@ -61,6 +65,18 @@ public class Tweet {
 
 	public int getId() {
 		return id;
+	}
+
+	public int getLikes() {
+		return likes;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

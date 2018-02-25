@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -36,17 +37,30 @@ public class TweetController {
 	}
 
 	@PostMapping("/add")
-	public String addNew(@Valid @ModelAttribute Tweet tweet, BindingResult result, Model model, HttpServletRequest request) {
+	public String addNew(@Valid @ModelAttribute Tweet tweet, BindingResult result, Model model,
+			HttpServletRequest request) {
 
 		tweet.setCreated(LocalDateTime.now());
-		
+
 		HttpSession sess = request.getSession();
 		User user = (User) sess.getAttribute("user");
 		tweet.setUser(user);
-		
+
 		tweetRepo.save(tweet);
 		return "redirect:/main";
 
+	}
+
+	@GetMapping("/like/{id}")
+	public String like(@PathVariable int id) {
+		Tweet tweet = tweetRepo.findById(id);
+
+		int likes = tweet.getLikes();
+
+		tweet.setLikes(likes + 1);
+		tweetRepo.save(tweet);
+
+		return "redirect:/main";
 	}
 
 }

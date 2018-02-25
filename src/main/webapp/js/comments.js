@@ -1,0 +1,1 @@
+var	tweetID	=	$('#t1').text()

@@ -10,13 +10,15 @@
 <title>Insert title here</title>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 </head>
+<body >
 <jsp:include page="header.jsp" />
-<body bgcolor="#E6E6FA">
-	<h1>Add Tweet</h1>
+
+<div style="padding:10px">
+	<h2>Add Tweet</h2>
 	<form:form modelAttribute="tweet" method="post">
 		<form:hidden path="id" />
 
-		<label>text</label>
+		<label>Text</label>
 		<form:errors path="text" />
 		<form:input path="text" />
 		
@@ -24,6 +26,7 @@
 		
 		<form:button type="submit">Save</form:button>
 	</form:form>
+</div>
 <jsp:include page="footer.jsp" />
 </body>
 </html>
